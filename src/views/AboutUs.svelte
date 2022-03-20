@@ -1,64 +1,130 @@
-<script>
+<script lang="ts">
   import PrettyCard from 'src/components/PrettyCard.svelte'
   import oneJPG from 'src/assets/1.jpg'
   import twoJPG from 'src/assets/2.jpg'
   import threeJPG from 'src/assets/3.jpg'
+  import { onMount } from 'svelte'
+  import Rellax from 'rellax'
+  import IntersectionObserver from 'svelte-intersection-observer'
+
+  let one, two, three
+  const rellax: any = {}
+
+  onMount(() => {
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      one = two = three = null
+      return
+    }
+
+    rellax.oneImg = new Rellax('#one img', {
+      speed: -1,
+      center: true,
+    })
+    rellax.oneText = new Rellax('#one .text', {
+      speed: -2,
+      center: true,
+    })
+    rellax.twoH2 = new Rellax('#two h2', {
+      speed: -1,
+      center: true,
+    })
+    rellax.twoText = new Rellax('#two .text', {
+      speed: -2,
+      center: true,
+    })
+    rellax.threeH2 = new Rellax('#three h2', {
+      speed: -1,
+      center: true,
+    })
+    rellax.threeText = new Rellax('#three .text', {
+      speed: 2,
+      center: true,
+    })
+  })
 </script>
 
-<PrettyCard>
-  <h1 slot="title">Pourquoi le <u class="C">C</u> ?</h1>
+<div id="AboutUs">
+  <PrettyCard>
+    <h1 slot="title">Pourquoi le <u class="C">C</u> ?</h1>
 
-  <section>
-    <article id="one">
-      <img src={oneJPG} alt="" />
-      <div class="text">
-        <h2>
-          <span class="C">C</span>
-          <span>L</span>
-          <span>A</span>
-          <span>S</span>
-          <span>S</span>
-          <span>E</span>
-        </h2>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-          porttitor felis blandit viverra varius.
-          <br />
-          <br />
-          Vestibulum a dignissim metus. In eleifend tellus enim, sit amet venenatis
-          libero lobortis sed. Nunc ullamcorper ligula eu sagittis lobortis. Cras
-          ornare ante sit amet placerat euismod.
-        </p>
-      </div>
-    </article>
+    <section>
+      <article id="one" bind:this={one}>
+        <IntersectionObserver
+          element={one}
+          on:intersect={() => {
+            rellax.oneImg.refresh()
+            rellax.oneText.refresh()
+          }}
+        >
+          <img src={oneJPG} alt="" />
+          <div class="text">
+            <h2>
+              <span class="C">C</span>
+              <span>L</span>
+              <span>A</span>
+              <span>S</span>
+              <span>S</span>
+              <span>E</span>
+            </h2>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+              porttitor felis blandit viverra varius.
+              <br />
+              <br />
+              Vestibulum a dignissim metus. In eleifend tellus enim, sit amet venenatis
+              libero lobortis sed. Nunc ullamcorper ligula eu sagittis lobortis.
+              Cras ornare ante sit amet placerat euismod.
+            </p>
+          </div>
+        </IntersectionObserver>
+      </article>
 
-    <article id="two">
-      <h2>
-        <span class="C">C</span>onnaissance &<br />
-        <span class="white">Expertise</span>
-      </h2>
-      <img src={twoJPG} alt="" />
-      <div class="text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porttitor
-        felis blandit viverra varius. Vestibulum a dignissim metus.
-      </div>
-    </article>
+      <article id="two" bind:this={two}>
+        <IntersectionObserver
+          element={two}
+          on:intersect={() => {
+            rellax.twoH2.refresh()
+            rellax.twoText.refresh()
+          }}
+        >
+          <h2>
+            <span class="C">C</span>onnaissance &<br />
+            <span class="white">Expertise</span>
+          </h2>
+          <img src={twoJPG} alt="" />
+          <div class="text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            porttitor felis blandit viverra varius. Vestibulum a dignissim
+            metus.
+          </div>
+        </IntersectionObserver>
+      </article>
 
-    <article id="three">
-      <h2>
-        <span class="C">C</span>onfortable<br />
-        <span class="C">C</span>onsidérable<br />
-        <span class="C">C</span>onvenable<br />
-        <span class="C">C</span>...
-      </h2>
-      <img src={threeJPG} alt="" />
-      <div class="text">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec porttitor
-        felis blandit viverra varius. Vestibulum a dignissim metus.
-      </div>
-    </article>
-  </section>
-</PrettyCard>
+      <article id="three">
+        <IntersectionObserver
+          element={three}
+          on:intersect={() => {
+            rellax.threeH2.refresh()
+            rellax.threeText.refresh()
+          }}
+        >
+          <h2>
+            <span class="C">C</span>onfortable<br />
+            <span class="C">C</span>onsidérable<br />
+            <span class="C">C</span>onvenable<br />
+            <span class="C">C</span>...
+          </h2>
+          <img src={threeJPG} alt="" />
+          <div class="text">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+            porttitor felis blandit viverra varius. Vestibulum a dignissim
+            metus.
+          </div>
+        </IntersectionObserver>
+      </article>
+    </section>
+  </PrettyCard>
+</div>
 
 <style>
   .C {
@@ -72,6 +138,7 @@
   h1 {
     font-weight: normal;
     font-size: 6vw;
+    color: #290001;
   }
 
   article {
@@ -79,11 +146,12 @@
   }
 
   article + article {
-    margin-top: 8.33vw;
+    margin-top: 15vw;
   }
 
   img {
-    border: 0.41vw solid #fbf8f6;
+    z-index: 1;
+    outline: 0.41vw solid #fbf8f6;
   }
 
   h2 {
@@ -92,11 +160,11 @@
   }
 
   .text {
+    z-index: -1;
     background: #4f4f54;
     color: #fbf8f6;
     font-size: 1.66vw;
     line-height: 150%;
-    z-index: -1;
   }
 
   #one {

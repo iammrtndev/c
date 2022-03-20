@@ -11,8 +11,9 @@
 
 <style>
   .PrettyCard {
-    padding: 8.33vw 8.33vw 20.83vw;
+    padding: 8.33vw 8.33vw 16.66vw;
     position: relative;
+    z-index: 1;
     border: 0.41vw solid #4f4f54;
     box-sizing: border-box;
   }

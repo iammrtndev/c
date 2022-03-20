@@ -1,25 +1,32 @@
-<script>
-  import landing from 'src/assets/landing.mp4'
+<script lang="ts">
+  import landingMP4 from 'src/assets/landing.mp4'
   import scissorLeft from 'src/assets/scissorLeft.png'
   import scissorRight from 'src/assets/scissorRight.png'
   import { waitFor } from 'src/utils'
+  import Rellax from 'rellax'
+  import { onMount } from 'svelte'
+
+  const scissorsScroll = window.innerHeight * 0.9
 
   let cut = false
-  const scroll = window.innerHeight * 0.6
+  let landing: HTMLElement
+
+  onMount(() => {
+    new Rellax(landing, { speed: -10 })
+  })
 </script>
 
-<div id="landing">
+<div id="landing" bind:this={landing}>
   <div id="cover" />
-  <video autoplay loop muted playsinline src={landing} />
-  <div id="line" />
+  <video autoplay loop muted playsinline src={landingMP4} />
 </div>
 
 <div
   id="scroll"
-  on:pointerenter={async () => {
+  on:click={async () => {
     cut = true
-    if (window.scrollY < scroll)
-      window.scrollTo({ top: scroll, behavior: 'smooth' })
+    if (window.scrollY < scissorsScroll)
+      window.scrollTo({ top: scissorsScroll, behavior: 'smooth' })
     await waitFor(300)
     cut = false
   }}
@@ -28,13 +35,13 @@
     <img class="scissor left" src={scissorLeft} alt="" />
     <img class="scissor right" src={scissorRight} alt="" />
   </div>
-  <div id="bg" />
+  <div id="halfCircle" />
 </div>
 
 <style>
   #landing {
     position: absolute;
-    z-index: -1;
+    z-index: -10;
     top: 0;
     width: 100%;
     min-height: 100vh;
@@ -57,15 +64,6 @@
     background-image: url('src/assets/landing.png');
     background-position: center;
     background-size: cover;
-  }
-
-  #line {
-    position: absolute;
-    z-index: 2;
-    width: 100%;
-    bottom: 0;
-    height: 0.41vw;
-    background: #4f4f54;
   }
 
   #scissors {
@@ -93,6 +91,7 @@
   }
 
   #scroll {
+    cursor: pointer;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -103,7 +102,7 @@
     overflow-y: hidden;
   }
 
-  #bg {
+  #halfCircle {
     position: absolute;
     z-index: -1;
     top: 0;

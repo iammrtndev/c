@@ -1,16 +1,18 @@
 <script>
   import phone from 'src/assets/phone.png'
   import fix from 'src/assets/fix.png'
-  import map from 'src/assets/map.png'
   import gmail from 'src/assets/gmail.png'
   import facebook from 'src/assets/facebook.png'
   import instagram from 'src/assets/instagram.png'
+  import Mapbox from 'src/components/Mapbox.svelte'
 </script>
 
-<div class="Footer">
+<div id="Footer">
   <h2>Nous Joindre</h2>
   <footer>
-    <img src={map} id="map" alt="" />
+    <div id="map">
+      <Mapbox />
+    </div>
     <p>Ouvert tous les jours de <b>10h à 18h</b></p>
     <p>Champ de Mars, 5 Av. Anatole France, 75007 Paris</p>
     <div class="tel">
@@ -22,13 +24,21 @@
       <a href="tel:0123456789">01 23 45 67 89</a>
     </div>
     <div id="socials">
-      <a href="https://www.facebook.com/">
+      <a
+        href="https://www.facebook.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img src={facebook} alt="" />
       </a>
-      <a href="https://www.instagram.com/">
+      <a
+        href="https://www.instagram.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img src={instagram} alt="" />
       </a>
-      <a href="https://www.twitter.com/">
+      <a href="mailto:" target="_blank" rel="noopener noreferrer">
         <img src={gmail} alt="" />
       </a>
     </div>
@@ -36,7 +46,7 @@
 </div>
 
 <style>
-  .Footer {
+  #Footer {
     position: relative;
     z-index: 1;
     margin-top: -4.16vw;
@@ -49,25 +59,29 @@
     height: 29.16vw;
   }
 
-  #map {
-    position: absolute;
-    bottom: 4.16vw;
-    left: 12.5vw;
-    width: 37.5vw;
-  }
-
   h2 {
     color: #290001;
-    font-size: 6.66vw;
+    font-size: 6vw;
     font-weight: normal;
     margin-left: 52.08vw;
   }
 
+  #map {
+    position: absolute;
+    bottom: 4.16vw;
+    left: 13vw;
+    width: 37.5vw;
+    height: 33.33vw;
+    outline:  0.41vw solid #fbf8f6;
+  }
+
   .tel a {
+    display: inline-flex;
     font-size: 1.66vw;
     color: #fbf8f6;
     text-align: right;
     flex: 1;
+    margin-left: 0.62vw;
   }
 
   p {
@@ -77,19 +91,15 @@
   }
 
   .tel {
-    width: 12.5vw;
-    display: flex;
     margin-bottom: 1.04vw;
   }
 
   #phone {
     width: 1.25vw;
-    height: auto;
   }
 
   #fix {
     width: 1.66vw;
-    height: auto;
   }
 
   #socials {
