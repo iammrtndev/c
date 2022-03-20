@@ -37,7 +37,9 @@
     z-index: -1;
     top: 0;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    min-height: fill-available;
+    min-height: -webkit-fill-available;
   }
 
   #landing video {
